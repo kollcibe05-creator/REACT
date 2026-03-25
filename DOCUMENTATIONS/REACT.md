@@ -46,7 +46,7 @@ Then in package.json add the script:
   "build": "esbuild index.js --bundle --outfile=dist/out.js"
 }
 ```
-When we run a build using esbuild, it makes sure that all the dependencies are included and up to date, and combines the code from multiple files into a single file that is ready to be loaded in the browser.
+When we run a build using esbuild, it makes sure that all the dependencies are included and up to date, and combines the code from multiple files into a single file that is ready to be loaded in the browser.  
 Note that the name of this file is specified in the build command above: dist/out.js.
 To run:
 ```
@@ -59,3 +59,114 @@ That is after updating the script in the index.html file.
 Change the src property to ``dist/out.js``
 
 Jest comes preinstalled when one generates a React project using CRA.
+
+**Component**: a function that takes in props and returns JSX.    
+They are dynamic  in that they can describe a template of JSX in which variables data can be populated.
+```jsx
+function BlogContent(props) {
+  return <div>{props.articleText}</div>;
+}
+```
+Note: For props that are strings, we don't need to place curly braces around the values; for other data types, we need curly braces
+#### Perks of components
+1. Are modular, reusable, and enable 'template' functionality.  
+2. Help us organize our interface's logic and presentation.  
+3. Enable us to think about each piece in isolation, and apply structure to complex programs.  
+
+Utilizing destrucuring is key in passing down props.
+Some props are pretty straightforward, but others are a bit out of hand. For instance: 
+```jsx
+const persona = {
+  name: "Collins", 
+  age: 5, 
+  value: "pragmatism"
+}
+```
+Remember that child elements receive an objectified prop and therefore the case above is a nested object. 
+There are many ways to handle this, most common: 
+- Destrucure as an arg then call them with the dot notation where needed.
+```jsx
+function Child ({persona}) {
+    return (
+        <>
+        <h1>Child: What is on your mind man.</h1>
+        <p>{persona.name} is {persona.age} old.</p>
+        </>
+    )
+}
+export default Child;
+```
+- Destructure it in the body of our component.
+```jsx
+function Child ({persona}) {
+    const {name, age, value} = persona
+    return (
+        <>
+        <h1>Child: What is on your mind man.</h1>
+        <p>{name} is {age} old. He is full of  {value}.</p>
+        </>
+    )
+}
+export default Child;
+```
+- Or destructuring even better in the params.
+```jsx
+function Child ({persona: {name, age, value}}) {
+    return (
+        <>
+        <h1>Child: What is on your mind man.</h1>
+        <p>{name} is {age} old. He is full of  {value}.</p>
+        </>
+    )
+}
+export default Child;
+```
+#### React Fragments.
+Allows a component to return multiple elements without adding a wrapper element that adds to the DOM.   
+```jsx
+<React.Fragment>
+Whatever you type.
+</React.Fragment>
+```
+Or even better;
+```jsx
+<>
+Whatever you type.
+</>
+```
+Fragments are not restricted to the outermost element being returned in JSX.
+
+#### React Children
+So far you've seen components rendered like this using the self-closing tag syntax: 
+```jsx
+function Example(props) {
+  return <div>{props.exampleProp}</div>;
+}
+
+<Example exampleProp="example value" />;
+```
+However, React also allows you to use your components with an opening and closing tag, like most HTML elements:   
+```jsx
+<Example exampleProp="example value">
+  <h1>Example header!</h1>
+  <p>Some example text</p>
+</Example>
+```
+#### Common Gotcha
+If the children is not called in the child element, it won't be displayed.
+```jsx
+function Child (props) {
+    // console.log(props)
+    const {children, persona} = props
+    console.log(children)
+    return (
+        <>
+        <h1>Child: What is on your mind man.</h1>
+        <p>{persona.name} is {persona.age} old. He is full of  {persona.value}.</p>
+        {children}
+        </>
+    )
+}
+export default Child;
+```
+
