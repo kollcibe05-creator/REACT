@@ -1,11 +1,17 @@
+import { useContext } from "react";
+import { UserContext } from "./Context";
+
 function Children (props) {
     const{children, data} = props
+    const user = useContext(UserContext)
+    console.log(user)
     return (
         <>
         <div>
-            Normal component in the normal stack.
+                 Nothing special init
         </div>
-        {children} //Very important
+        {children} {/*/Very important*/}
         </>
     )
 }
+export default Children;
