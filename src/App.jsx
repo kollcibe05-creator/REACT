@@ -28,19 +28,7 @@ function App() {
   }
   return (
     <main>
-      <section>
-        {currentQuestion ? (
-          <Question
-            question={currentQuestion}
-            onAnswered={handleQuestionsAnswered}
-          />
-        ): (
-          <>
-            <h1>Game Over</h1>
-            <h2>Total Correct: {score}</h2>
-          </>
-        )}
-      </section>
+      
     </main>
   )
 }
