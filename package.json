@@ -7,12 +7,15 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server": "json-server src/chatterbox/db.json -p 7200"
   },
   "dependencies": {
     "date-fns": "^4.1.0",
+    "json-server": "^1.0.0-beta.15",
     "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "react-dom": "^19.2.4",
+    "server": "^1.0.42"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
