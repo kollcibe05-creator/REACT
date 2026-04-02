@@ -9,26 +9,13 @@ import './App.css'
 // import UseEffect from './UseEffect'
 import quiz from './Timeout Q&A/quiz'
 import Question from './Timeout Q&A/Question'
+import Chatterbox from './chatterbox/Chatterbox'
 
 function App() {
-  const [questions, setQuestions] = useState(quiz)
-  const [currentQuestionId, setCurrentQuestion] = useState(1)
-  const[score, setScore] = useState(0)
-  const currentQuestion = questions.find(q => q.id === currentQuestionId)
 
-  function handleQuestionsAnswered(correct) {
-    if(currentQuestionId < questions.length) {
-      setCurrentQuestion((currentQuestion) => currentQuestionId + 1)
-    }else {
-      setCurrentQuestion(null)
-    }
-    if(correct) {
-      setScore(score => score + 1)
-    }
-  }
   return (
     <main>
-      
+      <Chatterbox/>
     </main>
   )
 }
