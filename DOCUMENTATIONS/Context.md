@@ -1,4 +1,5 @@
-We usually have many components each requiring a certain number of props. Conversely, some usually take in props which they do not entirely need just to pass them along to the child component resulting to ``prop drilling`` which can become a burden for deeply-nested component hiararchies.   
+We usually have many components each requiring a certain number of props. 
+Conversely, some usually take in props which they do not entirely need just to pass them along to the child component resulting to ``prop drilling`` which can become a burden for deeply-nested component hiararchies.   
 React Context solves this propblem.
 
 In order to create our context, we need to create two things:
