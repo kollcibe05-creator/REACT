@@ -118,7 +118,7 @@ To implement routes, we need to import ``createBrowserRouter`` and ``RouterProvi
 ```jsx
 import React from "react";
 import ReactDOM from "react-dom/client";
-// Import react-router functions
+// Import of the react-router functions
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 
@@ -157,13 +157,12 @@ An example of a Navbar with styling;
 import { NavLink } from "react-router-dom";
 import "./NavBar.css";
 
-/* define the NavBar component */
 function NavBar() {
   return (
     <nav>
       <NavLink
         to="/"
-        /* add styling to Navlink */
+        /* styling to Navlink */
         className="nav-link"
       >
         Home
@@ -240,3 +239,25 @@ function Home() {
 
 export default Home;
 ```
+# Dynamic Routes and URL Params.
+```jsx
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />
+  }, 
+  {
+    path: "/about",
+    element: <About />
+  },
+  {
+    path: "/login",
+    element: <Login />
+  },
+  {
+    path: "/profile/:id",
+    element: <UserProfile />
+  }
+]);
+```
+By including a URL parameter (or multiple parameters) in a route, we make that route dynamic — this single route can actually have many different URLs. Eg. */profile/1*.    
