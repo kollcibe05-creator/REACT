@@ -236,3 +236,4 @@ React compares the ```current``` and ```workInProgress trees```, identifies whic
 There are some misconceptions floating around regarding the DOM being slow, often related to how frameworks like React can improve performance.  
 While DOM manipulation itself isn't 'slow,' repainting what is displayed in the browser can be.  
 React can be very smart about handling DOM updates, which improves performance. Primarily, it does this in two ways: ``grouping DOM updates`` to ``prevent excessive repaints`` and being ``selective about what specifically needs to update and how``.
+Simplisticly, **Babel** compiles modern JS and JSX, **webpack** bundles and minifies code for production, **ESLint** helps with code quality; all just a tip of the iceberg.   
