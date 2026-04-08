@@ -204,6 +204,40 @@ Navbar.css;
     color: red;
 }
 ```
+### Do It Better!
+The most scalable, eligible and simplistic way to deal with the NavBar component especially when handling Protected Routing is to assume the approach; 
+```jsx
+import { useContext } from "react";
+import { AuthContext } from "./AuthContext";
+import { NavLink } from "react-router-dom";
+
+function Navbar () {
+    const {currentUser} = useContext(AuthContext)
+    
+    const NAV_ITEMS = [ 
+                // {path: "/", label:"App", roles: ["user", "admin", "guest"]},
+                {path: "/", label:"Home", roles: ["user", "admin"]},
+                {path: `/profile/${currentUser.id || 1}`, label:"Profile", roles: ["user", "admin"]},
+                {path: "/article", label:"Article", roles: ["admin"]},
+                {path: "/admin", label:"AdminDashboard", roles: ["admin"]},
+            ]
+    const visibleNavItems = NAV_ITEMS.filter(item => currentUser && item.roles.includes(currentUser.allowedRoles))        
+    return (
+        <nav>
+            {visibleNavItems.map(item => (
+                <NavLink
+                 key={item.path}
+                 to={item.path}
+                 className="nav-link"
+                >
+                    {item.label}
+                </NavLink>
+            ))}
+        </nav>
+    )
+}
+```
+
 You can then place your NavBar component in each of your page components to enable easy navigation between different pages in your application.  
 ```jsx
 import { useState, useEffect } from "react"
