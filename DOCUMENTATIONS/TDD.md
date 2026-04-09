@@ -99,6 +99,6 @@ Being able to run tests quickly becomes important once your application has hund
 In recent years (particularly in the JavaScript community), more emphasis has been placed on the value of writing integration tests and spending less time on unit testing.    
  One philosophy for testing that has been adopted as a replacement for the Test Pyramid is the `Kent C. Dodds' Test Trophy`:
 2. **Kent C. Dodds' Test Trophy**   
-[test pyramid]: https://martinfowler.com/bliki/TestPyramid.html
+[test pyramid](https://martinfowler.com/bliki/TestPyramid.html)
 The idea behind this approach that the higher up you move in the trophy, the more confidence you'll have that that your tests are accurately representing the feature you're trying to build.    
 The downside is that the higher up you move in the trophy, the more expensive and time consuming the tests are to run. So integration tests should be a good middle ground between confidence in your code and time needed to run the tests.
