@@ -300,5 +300,5 @@ npm install @testing-library/user-event
 ```
 ,,,,,,,
 To start of, we'll need to have a component with an event in it.
-
+Then you need the Event and the actions that are triggered by the response.
 
