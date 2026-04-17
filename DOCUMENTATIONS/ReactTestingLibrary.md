@@ -299,6 +299,10 @@ To do this, we'll need to use the `user-event library` which allows us to simula
 npm install @testing-library/user-event
 ```
 ,,,,,,,
-To start of, we'll need to have a component with an event in it.
-Then you need the Event and the actions that are triggered by the response.
+To start of, we'll use an ordering system for a pizza parlour.  
+We'll allow users to chose either pizza or pepperoni  using a checkbox.    
+We'll need to: 
+- Verify that the the initial state of the page is what we want.  
+- Simulate a user event.(in our case, clicking the checkbox.)  
+- Verify that the state of the page updates as expected.  
 
