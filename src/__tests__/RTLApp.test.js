@@ -1,6 +1,6 @@
 
 //import the logRoles method.
-import  {getRoles, logRoles, render, screen} from '@testing-library/react'
+import  {logRoles, render, screen} from '@testing-library/react'
 import '@testing-library/jest-dom'
 
 import Test from "../Test"
@@ -47,5 +47,34 @@ describe("QUERY METHODS", () => {
             }) 
 
             expect(topLevelHeading).toBeInTheDocument()
+    })
+})
+describe("WORKING WITH EVENTS", () => {
+    // 1. Test the initial state of the page
+    it("Pizza checkbox is initially unchecked", () => {
+        render(<Test/>)
+        const addPepperoni = screen.getByRole("checkbox", {name: /add pepperoni/i})
+        expect(addPepperoni).not.toBeChecked()
+    })
+    test("toppings list should initially contain only cheese.", () => {
+        render(<Test/>)
+
+        expect(screen.getAllByRole("listitem").length).toBe(1)
+    })
+    test("Also verify the text content to be matching", () => {
+        render(<Test/>)
+        expect(screen.getByText("Cheese")).toBeInTheDocument()
+    })
+
+    it("Also assert that pepperoni is not in the document", () => {
+        
+    })
+    // 2. Test the effect of clicking the checkbox. 
+    it("Pizza checkbox is initially unchecked", () => {
+
+    })
+    // 3. Test the effect of clicking the checkbox a second time. 
+    it("Pizza checkbox is initially unchecked", () => {
+
     })
 })
