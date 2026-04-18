@@ -14,7 +14,7 @@ Then update `package.json` to use vitest;
   "test": "vitest"
 }
 ```
-Then make sure Vite knows how to use `jsdom`(to simulate a browser for React components); 
+Then make sure Vite knows how to use `jsdom`(to simulate a browser for React components) in the file `vite.config.js`; 
 ```js
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
@@ -62,3 +62,15 @@ module.exports = {
 ```
 For the case of commonJS, use `jest.config.js` to esnure Jest uses `babel-jest` to process files and provide a browser-like  environment.  
 The *jest.config.js* syntax will be similar to the *.cjs*'
+4. Then you can update the `package.json` to use jest as the test package.  
+```json
+"scripts": {
+  "test": "vitest"
+}
+```
+Even better, add the ``--watch`` flag that re-runs the tests upon change in the tested code.  
+```json
+"scripts": {
+  "test": "jest --watch"
+}
+```
