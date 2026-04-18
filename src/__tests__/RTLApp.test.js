@@ -1,9 +1,11 @@
 
 //import the logRoles method.
 import  {logRoles, render, screen} from '@testing-library/react'
+import userEvent from "@testing-library/user-event"
 import '@testing-library/jest-dom'
 
 import Test from "../Test"
+import { add } from 'date-fns'
 
 describe("Test should be present", () => {
     it("Test must contain a h1 with a text Well Hello There", () => {
@@ -55,26 +57,53 @@ describe("WORKING WITH EVENTS", () => {
         render(<Test/>)
         const addPepperoni = screen.getByRole("checkbox", {name: /add pepperoni/i})
         expect(addPepperoni).not.toBeChecked()
-    })
-    test("toppings list should initially contain only cheese.", () => {
-        render(<Test/>)
 
+        // "toppings list should initially contain only cheese."
         expect(screen.getAllByRole("listitem").length).toBe(1)
-    })
-    test("Also verify the text content to be matching", () => {
-        render(<Test/>)
-        expect(screen.getByText("Cheese")).toBeInTheDocument()
-    })
-
-    it("Also assert that pepperoni is not in the document", () => {
         
-    })
+        // "Also verify the text content to be matching"  
+        expect(screen.getByText("Cheese")).toBeInTheDocument();
+
+        // "Also assert that pepperoni is not in the document"
+        expect(screen.queryByText("pepperoni")).not.toBeInTheDocument()
+        
+    })  
+
     // 2. Test the effect of clicking the checkbox. 
-    it("Pizza checkbox is initially unchecked", () => {
+    it("Toppings appear in the toppings list when checked.", async () => {
+        render(<Test/>)
+        const user = userEvent.setup()
+        // Checkboxes become checked when the user clicks them.
+        const addPepperoni = screen.getByRole("checkbox", {name: /add pepperoni/i})
+
+        await user.click(addPepperoni)
+
+        expect(addPepperoni).toBeChecked()
+
+        //Toppings is in the toppings list when checked.
+        expect(screen.getByText("Cheese")).toBeInTheDocument();
+        expect(screen.queryByText("Pepperoni")).toBeInTheDocument()
+
+        //``````````````````NOTE``````````````````````
+        // In modern versions of @testing-library/user-event (v14+), all user interactions are asynchronous. If you don't await the click, your assertion expect(...).toBeChecked() runs before the component has finished re-rendering.
+        // Update your test to be async and await the user interaction.
+        // In older versions, userEvent.click() was synchronous, but it is now best practice to initialize the user session using userEvent.setup(). This ensures that all events (like focus and hover) are handled correctly.
+
 
     })
     // 3. Test the effect of clicking the checkbox a second time. 
-    it("Pizza checkbox is initially unchecked", () => {
+    it("Selected toppings disappear when checked a second time.", () => {
+        render(<Test/>)
+        const addPepperoni = screen.getByRole("checkbox", {name: /add pepperoni/i})
+        userEvent.click(addPepperoni)
+
+        expect(screen.getByText("Cheese")).toBeInTheDocument();
+        expect(screen.queryByText("Pepperoni")).not.toBeInTheDocument()
+
+        userEvent.click(addPepperoni)
+
+        expect(screen.getByText("Cheese")).toBeInTheDocument();
+        expect(screen.queryByText("pepperoni")).not.toBeInTheDocument()
 
     })
 })
