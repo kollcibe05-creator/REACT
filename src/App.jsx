@@ -10,12 +10,13 @@ import './App.css'
 import quiz from './Timeout Q&A/quiz'
 import Question from './Timeout Q&A/Question'
 import Chatterbox from './chatterbox/Chatterbox'
+import Test from "./Test"
 
 function App() {
 
   return (
     <main>
-      <Chatterbox/>
+      <Test/>
     </main>
   )
 }
