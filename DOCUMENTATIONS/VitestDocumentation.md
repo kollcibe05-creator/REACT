@@ -1,7 +1,7 @@
 Vitest reads your `vite.config.*` by default, so your existing Vite plugins and configuration work out-of-the-box.   
 
 ```jsx
-import { expect, describe, it, test} from 'vitest' // You can (or chose not) to import `test`, `describe` and `it`
+import { expect, describe, it, test} from 'vitest' // You can (or chose not) to import `test`, `describe`, `expect` and `it`(if of course you have enabled globals in vite.config.js)
 describe("BASIC MATCHERS AND PRACTICES", () => {
     test("add 1 + 2 = 3", () => {
         expect(1 + 2).toBe(3)
@@ -10,10 +10,13 @@ describe("BASIC MATCHERS AND PRACTICES", () => {
             expect(Math.sqrt(-1)).toBeNaN()
     })
 })
+describe.todo("Will get back to this later on", () => {
+    
+})
 ```
 # Using Global imports
 As pin-pointed above, by default you import test, expect, describe, and other functions from the vites at the top of every file list.  
-You would rather use them as globals without importing by enabling the `globals` option in one's `config.  
+You would rather use them as globals without importing by enabling the `globals` option in one's `vite.config.js`.  
 
 # Test files
 By default, Vitest looks for any file that contains **.test.** or **.spec.**.  
@@ -37,3 +40,4 @@ describe.todo("Will get back to this later on", () => {
      ✓ returns NaN for negative numbers 1ms
    □ Will get back to this later on (0)
 ```
+# Using Matchers 

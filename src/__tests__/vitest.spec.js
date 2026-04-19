@@ -1,4 +1,4 @@
-import { expect, describe, it, test} from 'vitest' // You can (or chose not) to import `test`, `describe` and `it`
+// import { expect, describe, it, test} from 'vitest' // You can (or chose not) to import `test`, `describe`, `expect` and `it`(if of course you have enabled globals in vite.config.js)
 describe("BASIC MATCHERS AND PRACTICES", () => {
     test("add 1 + 2 = 3", () => {
         expect(1 + 2).toBe(3)
