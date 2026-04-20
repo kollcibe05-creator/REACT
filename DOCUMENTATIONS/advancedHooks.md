@@ -515,7 +515,7 @@ const Child = (props) => {
 export default memo(Child)  //The recipe here
 ```
 # useCallback
-Use callback, a React Hook, memoizes the `function`  
+useCallback, a React Hook, memoizes the `function`  
 ```jsx
 import { memo } from "react";
 
@@ -630,7 +630,7 @@ const Child2 = memo(({ value, updateValue }) => {
 ```
 `useCallback` accepts `two` params:   
 1. the `function` you want to memoize.  
-2.`deps array`. 
+2. `deps array`. 
 ```jsx
 import {useState, useCallback} from "react"
 function App () {
