@@ -267,3 +267,7 @@ form.new-message input[type="submit"]:focus {
   outline: none;
   opacity: 1;
 }
+
+input, label {
+  display: block;
+}
