@@ -11,12 +11,13 @@ import quiz from './Timeout Q&A/quiz'
 import Question from './Timeout Q&A/Question'
 import Chatterbox from './chatterbox/Chatterbox'
 import Test from "./Test"
+import Basic from "./formik"
 
 function App() {
 
   return (
     <main>
-      <Test/>
+      <Basic />
     </main>
   )
 }
