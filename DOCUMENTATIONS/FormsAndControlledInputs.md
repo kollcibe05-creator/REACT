@@ -181,5 +181,8 @@ function Output () {
     )
 }
 
-export default Output;
+export default Output
 ```
+### NOTE ON OPTIONS
+`radio` input does not allow multiple selections.   
+To select multiple options from a list of items, use `checkbox` as the type of input.
