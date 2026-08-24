@@ -565,5 +565,185 @@ expect(double.mock.results).toEqual([
 *`.mock.calls` stores references to the arguments, not copies. If you pass an object to a mock and then mutate it afterwards, the recorded call will reflect the mutated state, not the state at the time of the call.*  
 The pattern works for any callback-based API.
 *Everything in JS is truthy, except `false, null, undefined, NaN, O, -0, On, "" and document.all`*  
+# Working With Events
+We will need to use the `@testing-library/user-event` in a simulated DOM environment.  
+## Click Simulation
+```jsx
+import {render, screen} from '@testing-library/react' 
+import userEvent from '@testing-library/user-event'
+import {expect, test, vi} from 'vitest'
+import Button from './Button'
 
+test('Calls onClick when clicked', () => {
+  const handleClick = vi.fn()
+  render(<Button label='Click' onClick={handleClick}/>)
+
+  await userEvent.click(screen.getByText('Click'))
+
+  expect(handleClick).toHaveBeenCalledTimes(1)
+})
+```
+## Form Input & Typing
+```jsx
+export function InputForm() {
+  const [value, setValue] = React.useState('');
+  return (
+    <div>
+      <label htmlFor="username">Username</label>
+      <input id="username" value={value} onChange={(e) => setValue(e.target.value)} />
+      {value.length > 5 && <p>Username is long enough</p>}
+    </div>
+  );
+}
+
+// Test
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { expect, test } from 'vitest';
+import { InputForm } from './InputForm';
+
+test('updates value on typing and triggers conditional message', async () => {
+  render(<InputForm />);
+  
+  const input = screen.getByLabelText('Username');
+  
+  // Simulate typing
+  await userEvent.type(input, 'vitest');
+  
+  expect(input).toHaveValue('vitest');
+  expect(screen.getByText('Username is long enough')).toBeInTheDocument();
+});
+```
+## Form Submission
+```jsx
+export function SubmitForm({ onSubmit }) {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit({ email: e.target.email.value });
+  };
+  return (
+    <form onSubmit={handleSubmit}>
+      <input name="email" defaultValue="test@example.com" />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+// Test
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { expect, test, vi } from 'vitest';
+import { SubmitForm } from './SubmitForm';
+
+test('submits form data correctly', async () => {
+  const mockSubmit = vi.fn();
+  render(<SubmitForm onSubmit={mockSubmit} />);
+  
+  await userEvent.click(screen.getByRole('button', { name: 'Submit' }));
+  
+  expect(mockSubmit).toHaveBeenCalledTimes(1);
+  expect(mockSubmit).toHaveBeenCalledWith({ email: 'test@example.com' });
+});
+```
+## Select DropDowns
+```jsx
+// Component
+export function ThemeSelect({ onChange }) {
+  return (
+    <select onChange={(e) => onChange(e.target.value)} data-testid="select-theme">
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+    </select>
+  );
+}
+
+// Test
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { expect, test, vi } from 'vitest';
+import { ThemeSelect } from './ThemeSelect';
+
+test('allows selecting options from a dropdown', async () => {
+  const mockChange = vi.fn();
+  render(<ThemeSelect onChange={mockChange} />);
+  
+  const dropdown = screen.getByTestId('select-theme');
+  
+  // Select the dark option
+  await userEvent.selectOptions(dropdown, 'dark');
+  
+  expect(dropdown).toHaveValue('dark');
+  expect(mockChange).toHaveBeenCalledWith('dark');
+});
+```
+## Checkboxes and Toggles
+```jsx
+export function TermsCheckbox({ onAccept }) {
+  return (
+    <label>
+      <input type="checkbox" onChange={(e) => onAccept(e.target.checked)} />
+      Accept Terms
+    </label>
+  );
+}
+
+// Test
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { expect, test, vi } from 'vitest';
+import { TermsCheckbox } from './TermsCheckbox';
+
+test('toggles checkbox states', async () => {
+  const mockAccept = vi.fn();
+  render(<TermsCheckbox onAccept={mockAccept} />);
+  
+  const checkbox = screen.getByRole('checkbox', { name: 'Accept Terms' });
+  
+  expect(checkbox).not.toBeChecked();
+  
+  // Check it
+  await userEvent.click(checkbox);
+  expect(checkbox).toBeChecked();
+  expect(mockAccept).toHaveBeenLastCalledWith(true);
+  
+  // Uncheck it
+  await userEvent.click(checkbox);
+  expect(checkbox).not.toBeChecked();
+  expect(mockAccept).toHaveBeenLastCalledWith(false);
+});
+```
+## Hover Events
+```jsx
+export function TooltipButton() {
+  const [visible, setVisible] = React.useState(false);
+  return (
+    <div>
+      <button onMouseEnter={() => setVisible(true)} onMouseLeave={() => setVisible(false)}>
+        Hover Me
+      </button>
+      {visible && <span>Helpful text</span>}
+    </div>
+  );
+}
+
+// Test
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { expect, test } from 'vitest';
+import { TooltipButton } from './TooltipButton';
+
+test('shows tooltip on hover and hides on unhover', async () => {
+  render(<TooltipButton />);
+  
+  const button = screen.getByRole('button', { name: 'Hover Me' });
+  
+  // Hover entry
+  await userEvent.hover(button);
+  expect(screen.getByText('Helpful text')).toBeInTheDocument();
+  
+  // Hover exit
+  await userEvent.unhover(button);
+  expect(screen.queryByText('Helpful text')).not.toBeInTheDocument();
+});
+```
 
