@@ -6,7 +6,7 @@ In order to create our context, we need to create two things:
 1. The actual context object.
 2. A context provider component.
 
-## I
+## Implementation
 create a context using:
 ```jsx
 const UserContext = React.createContext()
@@ -120,4 +120,16 @@ Then in specific files, destructuring is bound as our contexted has changed.
 ```jsx
  const { user } = useContext(UserContext);
 ```
-
+### Bluff
+To pass multiple variables, use an array, not a dictionary as potrayed.  
+```jsx
+const age = 6
+function UserProvider({children}){
+  const [user, setUser] = useState('Boogeyman')
+  return (
+    <UserContext.Provider value={[user, setUser, age]}/>
+    {children}
+    </UserContext.Provider>
+  )
+}
+```
