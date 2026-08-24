@@ -110,13 +110,13 @@ function Form () {
     return(
     <form onSubmit={(e) => handleSubmit(e)}>
         <label htmlFor="name">Name</label>
-        <input id="name" type="text" placeholder="Type your name" value={formData.name} onChange={(e) => handleChange(e)}/>
+        <input id="name" type="text" placeholder="Type your name" value={formData.name} onChange={handleChange}/>
 
         <label htmlFor="password">Password</label>
         <input id="password" name="password" type="text" value={formData.password} onChange={e => handleChange(e)}/>
 
         <label htmlFor="checked">Receive weekly emails</label>
-        <input id="approved" name="checked" type="checkbox" checked={formData.approved} onChange={e => handleChange(e)}/>
+        <input id="approved" name="checked" type="checkbox" checked={formData.approved} onChange={handleChange}/>
 
         <button type="submit">Submit</button>
     </form>
@@ -124,6 +124,7 @@ function Form () {
 }
 export default Form;
 ```
+The callback mustn't always pass the event as shown above since the event is usually implicitly passed to the function.
 # Bonus(Search and Options Combo)
 ```jsx
 import {useState} from "react"
