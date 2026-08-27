@@ -204,7 +204,8 @@ The fix:
 import React, { useState, useEffect, useReducer } from "react";
 import { getPokemon } from "./api"
 
-function Reducer (state, action) {
+// Calculates the NEXT state based on ACTION type
+function pokemonReducer (state, action) {
     if (action.type === "startFetch") {
         return { data: null, status: "pending", error: null
         }
@@ -219,16 +220,16 @@ function Reducer (state, action) {
 }
 function Pokemon({ name = "pikachu" }) {
 
-const [state, dispatch] =  useReducer(reducer, {
+const [state, dispatch] =  useReducer(pokemonReducer, {
         data: null, 
         status: "idle", 
         error: null
     })
 
-const [state, data, error] = state //we drop all the states and take up the *useReducer*`s one.  
+const {status, data, error} = state //we drop all the states and take up the *useReducer*`s one.  
 
   useEffect(() => {
-    dispatch("startFetch") //No payload as we have no data to be passed.  
+    dispatch({type: "startFetch"}) //No payload as we have no data to be passed.  
     // setStatus("pending");
     getPokemon(name)
       .then((data) => {
@@ -290,8 +291,12 @@ Reducers are written outside of the component as they are supposed to be `pure` 
 
 The way `action` works is via  the `dispatch` function where we pass the: 
 1. `type`
-2. `payload` which is basically the data. 
-
+2. `payload` which is basically the data.
+### The Reducer Cycle  
+1. `dispatch({type: 'startFetch'})` is triggered. (*We are basically calling `dispatch(action)`*) 
+2. React calls `pokemonReducer(currentState, action)`
+3. `pokemonReducer` evaluates the action type and returns `{data: null, status: 'pending', error: null}`
+4. React updates `state` and re-renders the component
 Revamped example: 
 ```jsx
 import React, { createContext, useState, useReducer } from "react";
